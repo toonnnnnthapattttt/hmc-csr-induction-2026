@@ -1274,8 +1274,10 @@
         function prevSlide() { if (currentSlide > 0) showSlide(currentSlide - 1); }
         function updatePresentationScale() {
             if (!presentationMode) return;
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
+            /* Visual Viewport API = accurate on mobile Chrome & Safari */
+            const vv = window.visualViewport;
+            const vw = vv ? vv.width : window.innerWidth;
+            const vh = vv ? vv.height : window.innerHeight;
             const scaleX = vw / 960;
             const scaleY = vh / 540;
             document.documentElement.style.setProperty('--presentation-scale', Math.min(scaleX, scaleY));
@@ -1329,6 +1331,13 @@
             }
         });
         document.addEventListener('webkitfullscreenchange', updatePresentationScale);
+        /* Visual Viewport resize (most accurate on mobile) */
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', () => {
+                updatePresentationScale();
+                if (!presentationMode) updateMobileScale();
+            });
+        }
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
             else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
