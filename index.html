@@ -1253,6 +1253,15 @@
         }
         function nextSlide() { if (currentSlide < slides.length - 1) showSlide(currentSlide + 1); }
         function prevSlide() { if (currentSlide > 0) showSlide(currentSlide - 1); }
+        function updatePresentationScale() {
+            if (!presentationMode) return;
+            const vw = window.innerWidth || document.documentElement.clientWidth;
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const scaleX = vw / 960;
+            const scaleY = vh / 540;
+            document.documentElement.style.setProperty('--presentation-scale', Math.min(scaleX, scaleY));
+        }
+
         function togglePresentation() {
             presentationMode = !presentationMode;
             document.body.classList.toggle('presentation-mode', presentationMode);
@@ -1263,15 +1272,36 @@
                     s.style.transformOrigin = '';
                     s.style.marginBottom = '';
                 });
-                const scaleX = window.innerWidth / 960;
-                const scaleY = window.innerHeight / 540;
-                document.documentElement.style.setProperty('--presentation-scale', Math.min(scaleX, scaleY));
+                /* Try native fullscreen to hide URL bar */
+                const el = document.documentElement;
+                if (el.requestFullscreen) { el.requestFullscreen().catch(() => {}); }
+                else if (el.webkitRequestFullscreen) { el.webkitRequestFullscreen(); }
+                updatePresentationScale();
                 showSlide(currentSlide);
             } else {
-                /* Exiting: re-apply mobile scaling if needed */
+                /* Exit native fullscreen */
+                if (document.fullscreenElement) { document.exitFullscreen().catch(() => {}); }
+                else if (document.webkitFullscreenElement) { document.webkitExitFullscreen(); }
+                /* Re-apply mobile scaling if needed */
                 updateMobileScale();
             }
         }
+
+        /* Recalculate on resize / orientation change / fullscreen change */
+        window.addEventListener('resize', () => { updatePresentationScale(); });
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updatePresentationScale, 200);
+        });
+        document.addEventListener('fullscreenchange', updatePresentationScale);
+        document.addEventListener('webkitfullscreenchange', updatePresentationScale);
+        /* Exit presentation if user exits fullscreen via browser gesture */
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && presentationMode) {
+                presentationMode = false;
+                document.body.classList.remove('presentation-mode');
+                updateMobileScale();
+            }
+        });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
             else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
