@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMC CSR Induction Day 2026</title>
+    <style>
+        /* ============================================================
+           HMC POLYMERS - CSR INDUCTION DAY 2026
+           Based on: HMC Polymers Presentation Template (Navy/Cyan)
+           ============================================================ */
+
+        :root {
+            /* Primary Colors */
+            --hmc-navy: #00407A;
+            --hmc-dark-navy: #12406A;
+            --hmc-cyan: #039ADF;
+            --hmc-light-cyan: #00B0F0;
+
+            /* Accent Colors */
+            --hmc-sky: #2BA9E3;
+            --hmc-sky-light: #6DCFF6;
+            --hmc-sky-lighter: #47B1F2;
+            --hmc-sky-pale: #B9E6FC;
+            --hmc-sky-wash: #D6F0FD;
+
+            /* Secondary Colors (from CI) */
+            --hmc-yellow: #FFCB05;
+            --hmc-orange: #F29400;
+            --hmc-green: #97BE0D;
+            --hmc-lavender: #E026A3;
+
+            /* Neutral Colors */
+            --hmc-white: #FFFFFF;
+            --hmc-gray: #5B5B5B;
+            --hmc-black: #000000;
+            --hmc-light-gray: #F5F5F5;
+            --hmc-border-gray: #E0E0E0;
+
+            /* Typography */
+            --font-heading: 'Calibri', 'Tahoma', 'Roboto', sans-serif;
+            --font-body: 'Calibri', 'Tahoma', 'Roboto', sans-serif;
+
+            /* Slide Dimensions (16:9) */
+            --slide-width: 960px;
+            --slide-height: 540px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: #2c2c2c;
+            color: var(--hmc-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            gap: 2rem;
+        }
+
+        @media print {
+            body { background: white; padding: 0; gap: 0; }
+            .slide { box-shadow: none !important; page-break-after: always; border-radius: 0 !important; }
+            .slide:last-child { page-break-after: auto; }
+            .nav-controls { display: none !important; }
+        }
+
+        /* --- Slide Base --- */
+        .slide {
+            width: var(--slide-width);
+            height: var(--slide-height);
+            background: var(--hmc-white);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* --- Slide Footer --- */
+        .slide-footer {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            font-size: 9px;
+            color: var(--hmc-navy);
+            z-index: 10;
+        }
+        .slide-footer a { color: var(--hmc-navy); text-decoration: none; }
+        .slide-footer .footer-left { display: flex; align-items: center; gap: 8px; }
+        .slide-footer .footer-divider { color: var(--hmc-sky); font-weight: bold; }
+        .slide-footer .page-number { font-weight: bold; color: var(--hmc-navy); }
+
+        /* ============================================================
+           SLIDE TYPE: Title / Cover
+           ============================================================ */
+        .slide--title {
+            background: linear-gradient(135deg, var(--hmc-navy) 0%, var(--hmc-dark-navy) 40%, #1a5a9e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 60px 80px;
+        }
+        .slide--title .title-decoration {
+            position: absolute; top: 0; right: 0;
+            width: 50%; height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(3,154,223,0.15) 50%, rgba(0,176,240,0.25) 100%);
+            clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        .slide--title .wave-decoration {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 120px; opacity: 0.1;
+        }
+        .slide--title .wave-decoration svg { width: 100%; height: 100%; }
+        .slide--title .logo {
+            position: absolute; top: 30px; right: 40px; height: 50px; z-index: 2;
+        }
+        .slide--title .subtitle-prefix {
+            font-size: 18px; color: var(--hmc-sky); font-weight: bold; margin-bottom: 8px; z-index: 2;
+        }
+        .slide--title h1 {
+            font-family: var(--font-heading); font-size: 48px; font-weight: bold;
+            color: var(--hmc-cyan); line-height: 1.1; margin-bottom: 12px; z-index: 2;
+        }
+        .slide--title .tagline {
+            font-size: 22px; font-weight: bold; color: var(--hmc-white); line-height: 1.3; z-index: 2;
+        }
+        .slide--title .cover-date {
+            font-size: 14px; color: var(--hmc-sky-light); margin-top: 16px; z-index: 2; font-weight: 500;
+        }
+        .slide--title .slide-footer { color: rgba(255,255,255,0.5); }
+        .slide--title .slide-footer a { color: rgba(255,255,255,0.5); }
+
+        /* ============================================================
+           SLIDE TYPE: Section Divider
+           ============================================================ */
+        .slide--section {
+            background: var(--hmc-white);
+            display: flex;
+            align-items: center;
+        }
+        .slide--section .section-bar {
+            position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+            background: linear-gradient(to bottom, var(--hmc-cyan), var(--hmc-navy));
+        }
+        .slide--section .section-accent {
+            position: absolute; right: 0; top: 0; width: 40%; height: 100%;
+            background: linear-gradient(135deg, transparent 0%, var(--hmc-sky-wash) 100%);
+            clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+        }
+        .slide--section .section-content { padding: 60px 80px; z-index: 2; }
+        .slide--section .section-number {
+            font-size: 48px; font-weight: bold; color: var(--hmc-sky-pale); margin-bottom: 8px;
+        }
+        .slide--section h2 {
+            font-family: var(--font-heading); font-size: 40px; font-weight: bold;
+            color: var(--hmc-navy); line-height: 1.2; margin-bottom: 12px;
+        }
+        .slide--section .section-subtitle {
+            font-size: 18px; color: var(--hmc-gray); line-height: 1.5;
+        }
+        /* mascot on section */
+        .slide--section .mascot {
+            position: absolute; z-index: 15; pointer-events: none;
+        }
+
+        /* ============================================================
+           SLIDE TYPE: Content (Title Header + Body)
+           ============================================================ */
+        .slide--content { padding: 0; }
+        .slide--content .slide-header {
+            background: linear-gradient(135deg, var(--hmc-navy) 0%, var(--hmc-dark-navy) 100%);
+            padding: 20px 48px;
+            display: flex; align-items: center; justify-content: space-between;
+            min-height: 72px; position: relative;
+        }
+        .slide--content .slide-header h3 {
+            font-family: var(--font-heading); font-size: 24px; font-weight: bold; color: var(--hmc-white);
+        }
+        .slide--content .slide-header .header-logo { height: 32px; }
+        .slide--content .slide-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(to right, var(--hmc-cyan), var(--hmc-light-cyan), transparent);
+        }
+        .slide--content .slide-body {
+            padding: 28px 48px;
+            height: calc(var(--slide-height) - 72px - 32px);
+            overflow: hidden;
+        }
+
+        /* Content Typography */
+        .slide--content h4 {
+            font-family: var(--font-heading); font-size: 20px; font-weight: bold;
+            color: var(--hmc-navy); margin-bottom: 12px;
+        }
+        .slide--content p {
+            font-size: 14px; line-height: 1.6; color: var(--hmc-gray); margin-bottom: 12px;
+        }
+        .slide--content ul, .slide--content ol {
+            font-size: 14px; line-height: 1.8; color: var(--hmc-gray); padding-left: 20px; margin-bottom: 12px;
+        }
+        .slide--content li { margin-bottom: 4px; }
+        .slide--content li::marker { color: var(--hmc-cyan); }
+
+        /* ============================================================
+           SLIDE TYPE: Full Image with Overlay
+           ============================================================ */
+        .slide--fullimage {
+            background-size: cover; background-position: center;
+            display: flex; align-items: flex-end;
+        }
+        .slide--fullimage .overlay {
+            background: linear-gradient(to top, rgba(0,64,122,0.9) 0%, rgba(0,64,122,0.6) 50%, transparent 100%);
+            width: 100%; padding: 40px 48px;
+        }
+        .slide--fullimage .overlay h3 {
+            font-family: var(--font-heading); font-size: 32px; font-weight: bold;
+            color: var(--hmc-white); margin-bottom: 8px;
+        }
+        .slide--fullimage .overlay p {
+            font-size: 16px; color: rgba(255,255,255,0.85); line-height: 1.5;
+        }
+
+        /* ============================================================
+           SLIDE TYPE: Thank You / End
+           ============================================================ */
+        .slide--end {
+            background: linear-gradient(135deg, var(--hmc-navy) 0%, var(--hmc-dark-navy) 50%, #0d3459 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .slide--end .end-decoration {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(3,154,223,0.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 30%, rgba(0,176,240,0.1) 0%, transparent 50%);
+        }
+        .slide--end .end-content {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; z-index: 2;
+        }
+        .slide--end .logo { height: 60px; margin-bottom: 24px; }
+        .slide--end h2 {
+            font-family: var(--font-heading); font-size: 44px; font-weight: bold;
+            color: var(--hmc-white); margin-bottom: 16px;
+        }
+        .slide--end .contact-info {
+            font-size: 16px; color: var(--hmc-sky-light); line-height: 1.8;
+        }
+        .slide--end .contact-info a { color: var(--hmc-sky-light); text-decoration: none; }
+        .slide--end .mascot { position: absolute; z-index: 15; pointer-events: none; }
+
+        /* ============================================================
+           LAYOUT: Columns
+           ============================================================ */
+        .col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; height: 100%; }
+        .col-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; height: 100%; }
+        .col-left, .col-right, .col-item { display: flex; flex-direction: column; }
+
+        /* ============================================================
+           COMPONENT: Info Card
+           ============================================================ */
+        .info-card {
+            background: var(--hmc-light-gray); border-left: 4px solid var(--hmc-cyan);
+            border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 12px;
+        }
+        .info-card h5 { font-size: 14px; font-weight: bold; color: var(--hmc-navy); margin-bottom: 4px; }
+        .info-card p { font-size: 12px; color: var(--hmc-gray); margin: 0; }
+
+        /* ============================================================
+           COMPONENT: Highlight Box
+           ============================================================ */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--hmc-sky-wash) 0%, var(--hmc-white) 100%);
+            border: 1px solid var(--hmc-sky-pale); border-radius: 8px; padding: 20px; text-align: center;
+        }
+        .highlight-box .big-number { font-size: 36px; font-weight: bold; color: var(--hmc-cyan); }
+        .highlight-box .label { font-size: 12px; color: var(--hmc-navy); margin-top: 4px; }
+
+        /* ============================================================
+           COMPONENT: Icon Circle
+           ============================================================ */
+        .icon-circle {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 16px; flex-shrink: 0;
+        }
+
+        /* ============================================================
+           COMPONENT: Stakeholder / List Item
+           ============================================================ */
+        .stake-item {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+        }
+        .stake-item h5 { font-size: 15px; font-weight: bold; color: var(--hmc-navy); margin-bottom: 2px; }
+        .stake-item p { font-size: 12px; color: var(--hmc-gray); margin: 0; }
+
+        /* ============================================================
+           COMPONENT: Pillar Card (colored top border) — basic
+           ============================================================ */
+        .pillar-card {
+            background: var(--hmc-white); border-radius: 8px; padding: 24px 20px;
+            text-align: center; border: 1px solid var(--hmc-border-gray);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .pillar-card .pillar-num {
+            font-size: 40px; font-weight: bold; opacity: 0.15; line-height: 1; color: var(--hmc-navy);
+        }
+        .pillar-card h5 {
+            font-size: 16px; font-weight: bold; color: var(--hmc-navy);
+            margin: 6px 0; min-height: 36px; display: flex; align-items: center; justify-content: center;
+        }
+        .pillar-card p { font-size: 12px; color: var(--hmc-gray); margin: 0; line-height: 1.5; }
+        .pillar-card.border-cyan { border-top: 4px solid var(--hmc-cyan); }
+        .pillar-card.border-orange { border-top: 4px solid var(--hmc-orange); }
+        .pillar-card.border-lavender { border-top: 4px solid var(--hmc-lavender); }
+        .pillar-card.border-green { border-top: 4px solid var(--hmc-green); }
+        .pillar-card.border-sky { border-top: 4px solid var(--hmc-sky); }
+        .pillar-card.border-yellow { border-top: 4px solid var(--hmc-yellow); }
+
+        /* ============================================================
+           COMPONENT: Enhanced Pillar Card — 3 Pillars / 3E Framework
+           ============================================================ */
+        .pillar-enhanced {
+            position: relative; border-radius: 16px; padding: 28px 22px 22px;
+            text-align: center; overflow: hidden; color: #fff;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18); transition: transform 0.3s ease;
+        }
+        .pillar-enhanced:hover { transform: translateY(-4px); }
+        .pillar-enhanced .pillar-bg-pattern {
+            position: absolute; inset: 0; opacity: 0.1; pointer-events: none;
+        }
+        .pillar-enhanced .pillar-icon-wrap {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(255,255,255,0.2); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 14px; border: 2px solid rgba(255,255,255,0.35);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+        .pillar-enhanced .pillar-icon-wrap svg { width: 40px; height: 40px; fill: #fff; }
+        .pillar-enhanced .pillar-label {
+            font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+            opacity: 0.7; margin-bottom: 4px; font-weight: 600;
+        }
+        .pillar-enhanced h5 {
+            font-size: 19px; font-weight: 800; margin: 0 0 8px; letter-spacing: 0.5px; color: #fff;
+        }
+        .pillar-enhanced p {
+            font-size: 12px; opacity: 0.85; line-height: 1.5; margin: 0; color: #fff;
+        }
+        .pillar-enhanced.bg-cyan {
+            background: linear-gradient(135deg, #039ADF 0%, #00407A 100%);
+        }
+        .pillar-enhanced.bg-orange {
+            background: linear-gradient(135deg, #F29400 0%, #D97A00 100%);
+        }
+        .pillar-enhanced.bg-lavender {
+            background: linear-gradient(135deg, #E026A3 0%, #9B1B70 100%);
+        }
+        .pillar-enhanced.bg-navy {
+            background: linear-gradient(135deg, #00407A 0%, #0B1D3A 100%);
+        }
+        .pillar-enhanced.bg-sky {
+            background: linear-gradient(135deg, #2BA9E3 0%, #00407A 100%);
+        }
+        .pillar-enhanced.bg-green {
+            background: linear-gradient(135deg, #97BE0D 0%, #5C7A00 100%);
+        }
+        .pillar-enhanced .pillar-number-bg {
+            position: absolute; top: -15px; right: -8px;
+            font-size: 100px; font-weight: 900; opacity: 0.08; line-height: 1;
+            pointer-events: none; color: #fff;
+        }
+
+        /* 3E Framework — "E" letter accent */
+        .framework-card {
+            position: relative; border-radius: 16px; padding: 24px 20px 20px;
+            overflow: hidden; color: #fff; text-align: left;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18); transition: transform 0.3s ease;
+        }
+        .framework-card:hover { transform: translateY(-4px); }
+        .framework-card .fw-big-letter {
+            position: absolute; top: -20px; left: 10px;
+            font-size: 140px; font-weight: 900; opacity: 0.1; line-height: 1;
+            pointer-events: none; color: #fff;
+        }
+        .framework-card .fw-stripe {
+            position: absolute; top: 0; right: 0; width: 6px; height: 100%;
+            opacity: 0.4;
+        }
+        .framework-card .fw-num {
+            font-size: 13px; font-weight: 700; letter-spacing: 2px;
+            opacity: 0.6; margin-bottom: 8px; text-transform: uppercase;
+        }
+        .framework-card h5 {
+            font-size: 22px; font-weight: 800; margin: 0 0 6px; color: #fff;
+        }
+        .framework-card p {
+            font-size: 12px; opacity: 0.85; line-height: 1.5; margin: 0; color: #fff;
+        }
+        .framework-card .fw-icon {
+            width: 44px; height: 44px; border-radius: 10px;
+            background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.25);
+        }
+        .framework-card .fw-icon svg { width: 24px; height: 24px; fill: #fff; }
+        .framework-card.bg-warm {
+            background: linear-gradient(160deg, #F29400 0%, #E06800 60%, #C05000 100%);
+        }
+        .framework-card.bg-teal {
+            background: linear-gradient(160deg, #039ADF 0%, #0075A8 60%, #00407A 100%);
+        }
+        .framework-card.bg-earth {
+            background: linear-gradient(160deg, #97BE0D 0%, #6B8A00 60%, #3D5200 100%);
+        }
+
+        /* Section title bar for enhanced slides */
+        .enhanced-section-title {
+            text-align: center; margin-bottom: 16px;
+        }
+        .enhanced-section-title h3 {
+            font-size: 22px; font-weight: 800; color: var(--hmc-navy);
+            letter-spacing: 1px; margin: 0;
+        }
+        .enhanced-section-title .title-accent {
+            display: inline-block; width: 50px; height: 4px; border-radius: 2px;
+            background: linear-gradient(90deg, var(--hmc-cyan), var(--hmc-navy));
+            margin-top: 6px;
+        }
+
+        /* ============================================================
+           COMPONENT: Tags
+           ============================================================ */
+        .tag {
+            display: inline-block; padding: 3px 12px; border-radius: 12px;
+            font-size: 10px; font-weight: bold; color: white;
+        }
+        .tag--cyan { background: var(--hmc-cyan); }
+        .tag--orange { background: var(--hmc-orange); }
+        .tag--yellow { background: var(--hmc-yellow); color: var(--hmc-navy); }
+        .tag--green { background: var(--hmc-green); }
+        .tag--navy { background: var(--hmc-navy); }
+        .tag--lavender { background: var(--hmc-lavender); }
+
+        /* ============================================================
+           COMPONENT: Activity Card
+           ============================================================ */
+        .activity-card {
+            background: var(--hmc-light-gray); border-radius: 8px; padding: 14px 16px;
+            border-left: 4px solid var(--hmc-cyan);
+        }
+        .activity-card h5 {
+            font-size: 11px; font-weight: bold; color: var(--hmc-navy);
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+        }
+        .activity-card ul { list-style: none; padding: 0; margin: 0; }
+        .activity-card li {
+            font-size: 10px; color: var(--hmc-gray); padding: 1px 0;
+        }
+        .activity-card li::before { content: '> '; color: var(--hmc-cyan); font-weight: bold; }
+
+        /* ============================================================
+           COMPONENT: Gallery Grid
+           ============================================================ */
+        .gallery-grid {
+            display: grid; gap: 6px; height: 100%;
+        }
+        .gallery-grid.g5x2 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .gallery-grid.g4x2 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .gallery-grid.g5x3 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr); }
+        .gallery-grid img {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 4px;
+            transition: transform 0.3s;
+        }
+        .gallery-grid img:hover { transform: scale(1.03); z-index: 2; }
+
+        /* ============================================================
+           COMPONENT: Mascot
+           ============================================================ */
+        .mascot { position: absolute; z-index: 15; pointer-events: none; }
+
+        /* ============================================================
+           COMPONENT: ECOLife Info Bar
+           ============================================================ */
+        .eco-bar {
+            background: var(--hmc-sky-wash); border: 1px solid var(--hmc-sky-pale);
+            border-radius: 8px; padding: 10px 16px; text-align: center;
+            font-size: 10px; color: var(--hmc-navy); margin-top: 10px;
+        }
+
+        /* ============================================================
+           COMPONENT: Circularity Banner — enhanced version
+           ============================================================ */
+        .circularity-banner {
+            position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #039ADF 0%, #00407A 60%, #0B1D3A 100%);
+            border-radius: 14px; padding: 16px 24px 16px 24px;
+            display: flex; align-items: center; gap: 18px;
+            margin-top: 6px; box-shadow: 0 4px 20px rgba(0,64,122,0.25);
+        }
+        .circularity-banner::before {
+            content: ''; position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                120deg,
+                transparent, transparent 40px,
+                rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 80px
+            );
+            pointer-events: none;
+        }
+        .circularity-icon-ring {
+            flex-shrink: 0; width: 64px; height: 64px; position: relative;
+        }
+        .circularity-icon-ring .ring-spin {
+            position: absolute; inset: 0;
+            animation: circ-spin 8s linear infinite;
+        }
+        @keyframes circ-spin { to { transform: rotate(360deg); } }
+        .circularity-icon-ring .ring-center {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .circularity-icon-ring .ring-center svg { width: 28px; height: 28px; fill: #fff; }
+        .circularity-text { flex: 1; position: relative; z-index: 1; }
+        .circularity-text .circ-label {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 12px; font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--hmc-yellow);
+            margin-bottom: 4px;
+        }
+        .circularity-text .circ-label svg { width: 14px; height: 14px; fill: var(--hmc-yellow); }
+        .circularity-text p {
+            font-size: 12.5px; line-height: 1.6; color: rgba(255,255,255,0.92);
+            margin: 0; font-weight: 400;
+        }
+        .circularity-text p strong { color: #fff; font-weight: 700; }
+        .circularity-glow {
+            position: absolute; top: -20px; right: -20px;
+            width: 100px; height: 100px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(151,190,13,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ============================================================
+           NAVIGATION
+           ============================================================ */
+        .nav-controls {
+            position: fixed; bottom: 20px; right: 20px; display: flex; gap: 8px; z-index: 100;
+        }
+        .nav-controls button {
+            width: 40px; height: 40px; border-radius: 50%; border: none;
+            background: var(--hmc-navy); color: white; font-size: 16px;
+            cursor: pointer; transition: background 0.2s;
+        }
+        .nav-controls button:hover { background: var(--hmc-cyan); }
+        /* ============================================================
+           PRESENTATION MODE
+           ============================================================ */
+        body.presentation-mode { background: black; padding: 0; gap: 0; overflow: hidden; }
+        body.presentation-mode .slide {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(var(--presentation-scale, 1));
+            display: none; box-shadow: none; border-radius: 0;
+        }
+        body.presentation-mode .slide.active { display: block; }
+        body.presentation-mode .nav-controls { bottom: 10px; right: 10px; opacity: 0; transition: opacity 0.3s; }
+        body.presentation-mode:hover .nav-controls { opacity: 1; }
+
+        @media (max-width: 1000px) {
+            :root { --slide-width: 100vw; --slide-height: calc(100vw * 9 / 16); }
+            body { padding: 1rem 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         SLIDE 1: COVER
+         ============================================================ -->
+    <div class="slide slide--title" id="slide-1">
+        <div class="title-decoration"></div>
+        <div class="wave-decoration">
+            <svg viewBox="0 0 960 120" preserveAspectRatio="none">
+                <path d="M0,60 Q240,120 480,60 T960,60 V120 H0 Z" fill="rgba(255,255,255,0.15)"/>
+                <path d="M0,80 Q240,20 480,80 T960,80 V120 H0 Z" fill="rgba(255,255,255,0.1)"/>
+            </svg>
+        </div>
+        <img class="logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC Polymers Logo">
+        <span class="subtitle-prefix">Induction Program</span>
+        <h1>CSR</h1>
+        <p class="tagline">HMC Polymers</p>
+        <p class="cover-date">MAR 5&ndash;6, 2026</p>
+        <div class="slide-footer" style="color:rgba(255,255,255,0.4);">
+            <div class="footer-left"><span style="color:rgba(255,255,255,0.4);">Corp Com and CSR Dept.</span></div>
+            <span class="page-number" style="color:rgba(255,255,255,0.4);"></span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 2: WHAT IS CSR?
+         ============================================================ -->
+    <div class="slide slide--section" id="slide-2">
+        <div class="section-bar"></div>
+        <div class="section-accent"></div>
+        <div class="section-content">
+            <div class="section-number">01</div>
+            <h2>What is CSR?</h2>
+            <p class="section-subtitle">Corporate Social Responsibility &mdash; taking care of people and the environment around our factory.</p>
+        </div>
+        <img class="mascot" src="https://img2.pic.in.th/36ac591f1ce97caf8.png" alt="Mascot" style="bottom:20px; right:40px; height:260px;">
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">2</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 3: WE DON'T OPERATE ALONE
+         ============================================================ -->
+    <div class="slide slide--section" id="slide-3">
+        <div class="section-bar"></div>
+        <div class="section-accent"></div>
+        <div class="section-content">
+            <div class="section-number">02</div>
+            <h2>We Don't Operate Alone</h2>
+            <p class="section-subtitle">Our factory is surrounded by communities &mdash; neighbors who may be affected by our operations.</p>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">3</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 4: OUR STAKEHOLDERS
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-4">
+        <div class="slide-header">
+            <h3>Our Stakeholders</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="display:flex; align-items:center;">
+            <div style="width:100%;">
+                <div class="stake-item">
+                    <div class="icon-circle" style="background:var(--hmc-cyan);">&#9650;</div>
+                    <div><h5>Surrounding Communities</h5><p>People living near our operations</p></div>
+                </div>
+                <div class="stake-item">
+                    <div class="icon-circle" style="background:var(--hmc-orange);">&#9650;</div>
+                    <div><h5>Regulatory Agencies</h5><p>Government oversight and compliance</p></div>
+                </div>
+                <div class="stake-item">
+                    <div class="icon-circle" style="background:var(--hmc-sky);">&#10005;</div>
+                    <div><h5>Media</h5><p>Public communication and transparency</p></div>
+                </div>
+                <div class="stake-item">
+                    <div class="icon-circle" style="background:var(--hmc-lavender);">&#9670;</div>
+                    <div><h5>Civil Society</h5><p>NGOs and advocacy organizations</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">4</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 5: OPERATING WITH CARE
+         ============================================================ -->
+    <div class="slide slide--section" id="slide-5">
+        <div class="section-bar"></div>
+        <div class="section-accent"></div>
+        <div class="section-content">
+            <div class="section-number">03</div>
+            <h2>Operating with Care</h2>
+            <p class="section-subtitle">Every decision considers the people and environment around us.</p>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">5</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 6: WHEN INCIDENTS HAPPEN
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-6">
+        <div class="slide-header">
+            <h3>When Incidents Happen</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="display:flex; align-items:center; justify-content:center;">
+            <div style="text-align:center; max-width:600px;">
+                <div style="font-size:48px; color:var(--hmc-cyan); margin-bottom:20px;">&#9888;</div>
+                <p style="font-size:20px; font-weight:bold; color:var(--hmc-navy); margin-bottom:16px;">We're Ready.</p>
+                <p style="font-size:16px; color:var(--hmc-gray); line-height:1.7;">Our crisis communication plan ensures fast, accurate, and consistent response.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">6</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 7: FROM PP TO NEW VALUE
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-7">
+        <div class="slide-header">
+            <h3>From PP to New Value</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="padding:16px 40px 8px; display:flex; flex-direction:column; height:calc(var(--slide-height) - 72px - 32px);">
+            <!-- Top section: 2 columns -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; flex:1; min-height:0;">
+                <div style="display:flex; flex-direction:column; justify-content:center;">
+                    <p style="font-size:13px; color:var(--hmc-gray); margin-bottom:12px; line-height:1.5;">Asia's No.1 polypropylene producer &mdash; our PP pellets are the building blocks for everyday life.</p>
+                    <div class="stake-item" style="padding:6px 0;">
+                        <div class="icon-circle" style="background:var(--hmc-orange); width:28px; height:28px; font-size:11px;">&#9650;</div>
+                        <div><h5 style="font-size:12px; margin-bottom:0;">Food Packaging</h5><p style="font-size:10px;">Safe, clean, recyclable containers</p></div>
+                    </div>
+                    <div class="stake-item" style="padding:6px 0;">
+                        <div class="icon-circle" style="background:var(--hmc-cyan); width:28px; height:28px; font-size:11px;">&#9650;</div>
+                        <div><h5 style="font-size:12px; margin-bottom:0;">Automotive</h5><p style="font-size:10px;">Lightweight, durable components</p></div>
+                    </div>
+                    <div class="stake-item" style="padding:6px 0;">
+                        <div class="icon-circle" style="background:var(--hmc-sky); width:28px; height:28px; font-size:11px;">&#10005;</div>
+                        <div><h5 style="font-size:12px; margin-bottom:0;">Medical</h5><p style="font-size:10px;">Sterile, chemical-resistant devices</p></div>
+                    </div>
+                    <div class="stake-item" style="padding:6px 0;">
+                        <div class="icon-circle" style="background:var(--hmc-lavender); width:28px; height:28px; font-size:11px;">&#9670;</div>
+                        <div><h5 style="font-size:12px; margin-bottom:0;">Textiles &amp; Pipes</h5><p style="font-size:10px;">Everyday essentials, built to last</p></div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:center; align-items:center;">
+                    <img src="https://img2.pic.in.th/41007032ca51ed132.png" alt="Mascot" style="height:200px;">
+                </div>
+            </div>
+
+            <!-- Circularity Banner — compact but eye-catching -->
+            <div class="circularity-banner" style="margin-top:8px; padding:12px 20px; border-radius:12px; flex-shrink:0;">
+                <!-- Spinning ring icon -->
+                <div class="circularity-icon-ring" style="width:48px; height:48px;">
+                    <svg class="ring-spin" viewBox="0 0 64 64">
+                        <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
+                        <path d="M32 4 a28 28 0 0 1 24.2 14" fill="none" stroke="var(--hmc-yellow)" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M56.2 18 a28 28 0 0 1 -0.2 28" fill="none" stroke="var(--hmc-green)" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M56 46 a28 28 0 0 1 -24 18" fill="none" stroke="#6DCFF6" stroke-width="3" stroke-linecap="round"/>
+                        <polygon points="54,16 59,20 55,23" fill="var(--hmc-yellow)"/>
+                        <polygon points="57,44 54,50 51,45" fill="var(--hmc-green)"/>
+                        <polygon points="34,62 28,60 32,56" fill="#6DCFF6"/>
+                    </svg>
+                    <div class="ring-center">
+                        <svg viewBox="0 0 24 24" style="width:22px; height:22px;"><path d="M12 4V1L8 5l4 4V6a6 6 0 016 6 6 6 0 01-.7 2.8l1.5 1.5A8 8 0 0012 4zM12 18a6 6 0 01-6-6 6 6 0 01.7-2.8L5.2 7.7A8 8 0 0012 20v3l4-4-4-4v3z"/></svg>
+                    </div>
+                </div>
+                <!-- Text -->
+                <div class="circularity-text">
+                    <div class="circ-label" style="font-size:11px; margin-bottom:2px;">
+                        <svg viewBox="0 0 24 24" style="width:12px; height:12px;"><path d="M12 4V1L8 5l4 4V6a6 6 0 016 6 6 6 0 01-.7 2.8l1.5 1.5A8 8 0 0012 4zM12 18a6 6 0 01-6-6 6 6 0 01.7-2.8L5.2 7.7A8 8 0 0012 20v3l4-4-4-4v3z"/></svg>
+                        Circularity
+                    </div>
+                    <p style="font-size:11.5px; line-height:1.5;">We promote <strong>PP recycling and recovery</strong> &mdash; bringing materials back into the <strong>value chain</strong> to create new value.</p>
+                </div>
+                <div class="circularity-glow"></div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">7</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 8: 31,206 kgCO2eq REDUCED
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-8">
+        <div class="slide-header">
+            <h3>Carbon Reduction Impact</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+            <p style="font-size:11px; color:var(--hmc-gray); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px;">From 2022</p>
+            <div style="font-size:72px; font-weight:bold; color:var(--hmc-cyan); line-height:1;">31,206</div>
+            <div style="font-size:18px; font-weight:bold; color:var(--hmc-navy); letter-spacing:2px; margin-top:4px;">kgCO&#8322;eq Reduced</div>
+            <p style="font-size:14px; color:var(--hmc-gray); margin-top:12px;">= Planting <strong style="color:var(--hmc-green);">3,285 Trees</strong></p>
+            <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; justify-content:center;">
+                <span class="tag tag--orange">Waste Separation Program</span>
+                <span class="tag tag--cyan">Recycle Shop</span>
+                <span class="tag tag--yellow">Food Waste Composting</span>
+            </div>
+            <p style="font-size:11px; color:var(--hmc-gray); opacity:0.6; margin-top:16px;">Small actions, big impact &mdash; these programs made it happen.</p>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">8</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 9: 3 PILLARS OF SUSTAINABILITY (Enhanced)
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-9" style="background: linear-gradient(170deg, #F0F8FF 0%, #E8F4FD 40%, #fff 100%);">
+        <!-- Decorative background circles -->
+        <svg style="position:absolute; top:-40px; right:-40px; width:200px; height:200px; opacity:0.06;" viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="#00407A" stroke-width="3"/><circle cx="100" cy="100" r="60" fill="none" stroke="#039ADF" stroke-width="2"/><circle cx="100" cy="100" r="30" fill="none" stroke="#00407A" stroke-width="1.5"/></svg>
+        <svg style="position:absolute; bottom:30px; left:-30px; width:140px; height:140px; opacity:0.05;" viewBox="0 0 140 140"><circle cx="70" cy="70" r="65" fill="none" stroke="#039ADF" stroke-width="2.5"/><circle cx="70" cy="70" r="35" fill="none" stroke="#00407A" stroke-width="1.5"/></svg>
+
+        <div style="padding: 28px 40px 8px; position:relative; z-index:2;">
+            <div class="enhanced-section-title">
+                <h3>3 Pillars of Sustainability</h3>
+                <div class="title-accent"></div>
+            </div>
+        </div>
+
+        <div class="slide-body" style="padding: 10px 40px 36px; position:relative; z-index:2;">
+            <div class="col-3" style="align-items:stretch; gap:20px;">
+                <!-- Pillar 1: Circularity -->
+                <div class="pillar-enhanced bg-cyan">
+                    <span class="pillar-number-bg">1</span>
+                    <svg class="pillar-bg-pattern" viewBox="0 0 280 320"><circle cx="240" cy="40" r="80" fill="#fff"/><circle cx="30" cy="280" r="50" fill="#fff"/></svg>
+                    <div class="pillar-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6a6 6 0 016 6 6 6 0 01-.7 2.8l1.5 1.5A8 8 0 0012 4zM12 18a6 6 0 01-6-6 6 6 0 01.7-2.8L5.2 7.7A8 8 0 0012 20v3l4-4-4-4v3z"/></svg>
+                    </div>
+                    <span class="pillar-label">Pillar 01</span>
+                    <h5>Circularity</h5>
+                    <p>Creating value through circular economy</p>
+                </div>
+
+                <!-- Pillar 2: Carbon Reduction -->
+                <div class="pillar-enhanced bg-orange">
+                    <span class="pillar-number-bg">2</span>
+                    <svg class="pillar-bg-pattern" viewBox="0 0 280 320"><polygon points="250,10 280,70 220,70" fill="#fff"/><polygon points="20,300 60,260 60,300" fill="#fff"/></svg>
+                    <div class="pillar-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.2 3.8 19.9c-.2.4.2.8.6.6C7.1 18.4 13.3 16.3 22 7.5c.2-.2 0-.6-.3-.5L17 8zM3.5 11c.6 0 1-.4 1-1s-.4-1-1-1-1 .4-1 1 .4 1 1 1zm3-4c.6 0 1-.4 1-1s-.4-1-1-1-1 .4-1 1 .4 1 1 1zm4-1c.6 0 1-.4 1-1s-.4-1-1-1-1 .4-1 1 .4 1 1 1z"/></svg>
+                    </div>
+                    <span class="pillar-label">Pillar 02</span>
+                    <h5>Carbon Reduction</h5>
+                    <p>Reducing greenhouse gas emissions</p>
+                </div>
+
+                <!-- Pillar 3: Connectivity -->
+                <div class="pillar-enhanced bg-lavender">
+                    <span class="pillar-number-bg">3</span>
+                    <svg class="pillar-bg-pattern" viewBox="0 0 280 320"><circle cx="40" cy="50" r="60" fill="#fff"/><circle cx="250" cy="290" r="40" fill="#fff"/></svg>
+                    <div class="pillar-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
+                    <span class="pillar-label">Pillar 03</span>
+                    <h5>Connectivity</h5>
+                    <p>Connecting with society and communities</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">9</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 10: 2026: THE 3E FRAMEWORK (Enhanced)
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-10" style="background: linear-gradient(150deg, #00407A 0%, #0B1D3A 100%); overflow:hidden;">
+        <!-- Decorative background elements -->
+        <svg style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0.04; pointer-events:none;" viewBox="0 0 960 540">
+            <text x="680" y="180" font-size="280" font-weight="900" fill="#fff" font-family="Calibri,sans-serif">3E</text>
+            <line x1="0" y1="540" x2="960" y2="0" stroke="#fff" stroke-width="0.5" opacity="0.5"/>
+            <line x1="0" y1="440" x2="960" y2="0" stroke="#fff" stroke-width="0.3" opacity="0.3"/>
+        </svg>
+        <!-- Glowing orbs -->
+        <div style="position:absolute; top:60px; right:80px; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle, rgba(3,154,223,0.15) 0%, transparent 70%); pointer-events:none;"></div>
+        <div style="position:absolute; bottom:50px; left:60px; width:80px; height:80px; border-radius:50%; background:radial-gradient(circle, rgba(151,190,13,0.12) 0%, transparent 70%); pointer-events:none;"></div>
+
+        <div style="padding: 24px 40px 6px; position:relative; z-index:2;">
+            <div class="enhanced-section-title">
+                <h3 style="color:#fff;">2026: The 3E Framework</h3>
+                <div class="title-accent" style="background: linear-gradient(90deg, var(--hmc-cyan), var(--hmc-yellow));"></div>
+            </div>
+            <p style="text-align:center; color:rgba(255,255,255,0.5); font-size:11px; letter-spacing:1px; margin-top:4px;">OUR STRATEGIC DIRECTION</p>
+        </div>
+
+        <div class="slide-body" style="padding: 8px 40px 36px; position:relative; z-index:2;">
+            <div class="col-3" style="align-items:stretch; gap:18px;">
+                <!-- E1: Expertise -->
+                <div class="framework-card bg-warm">
+                    <span class="fw-big-letter">E</span>
+                    <div class="fw-stripe" style="background:#fff;"></div>
+                    <div class="fw-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                    </div>
+                    <span class="fw-num">E1 &mdash; Expertise</span>
+                    <h5>Expertise</h5>
+                    <p>Building knowledge and capability through professional development</p>
+                </div>
+
+                <!-- E2: Extra Care -->
+                <div class="framework-card bg-teal">
+                    <span class="fw-big-letter">E</span>
+                    <div class="fw-stripe" style="background:#fff;"></div>
+                    <div class="fw-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                    <span class="fw-num">E2 &mdash; Extra Care</span>
+                    <h5>Extra Care</h5>
+                    <p>Caring for communities with heart and genuine compassion</p>
+                </div>
+
+                <!-- E3: Earth & Environment -->
+                <div class="framework-card bg-earth">
+                    <span class="fw-big-letter">E</span>
+                    <div class="fw-stripe" style="background:#fff;"></div>
+                    <div class="fw-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <span class="fw-num">E3 &mdash; Earth &amp; Env</span>
+                    <h5>Earth &amp; Environment</h5>
+                    <p>Protecting our planet together for future generations</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer" style="color:rgba(255,255,255,0.35);">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com" style="color:rgba(255,255,255,0.35);">www.hmcpolymers.com</a>
+                <span class="footer-divider" style="color:rgba(255,255,255,0.2);">|</span>
+            </div>
+            <span class="page-number" style="color:rgba(255,255,255,0.35);">10</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 11: HOW CAN YOU CONTRIBUTE?
+         ============================================================ -->
+    <div class="slide slide--section" id="slide-11">
+        <div class="section-bar"></div>
+        <div class="section-accent"></div>
+        <div class="section-content">
+            <div class="section-number">04</div>
+            <h2>How Can You Contribute?</h2>
+            <p class="section-subtitle">Everyone is part of this story. Every single action counts.</p>
+        </div>
+        <img class="mascot" src="https://img5.pic.in.th/file/secure-sv1/54a3fbe3af578b3ac.png" alt="Mascot" style="bottom:20px; right:50px; height:260px;">
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">11</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 12: JOIN THE ACTION — EARN REWARDS!
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-12">
+        <div class="slide-header">
+            <h3>Join the Action &mdash; Earn Rewards!</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="padding:16px 36px;">
+            <p style="font-size:11px; color:var(--hmc-gray); text-align:center; margin-bottom:10px;">Pick an activity, show up, and track your impact on the ECOLife App.</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:8px;">
+                <div class="activity-card" style="border-left-color:var(--hmc-cyan);">
+                    <h5>Health &amp; Environment</h5>
+                    <ul>
+                        <li>ICC Beach Cleanup</li>
+                        <li>Waste Sorting Roadshow</li>
+                        <li>Tree Planting</li>
+                        <li>Blood Donation</li>
+                        <li>HMC Recycle Shop</li>
+                    </ul>
+                </div>
+                <div class="activity-card" style="border-left-color:var(--hmc-lavender);">
+                    <h5>Religion, Traditional &amp; Culture</h5>
+                    <ul>
+                        <li>Kathin Ceremony</li>
+                        <li>Loy Krathong Festival</li>
+                        <li>Islamic Tea Ceremony</li>
+                    </ul>
+                </div>
+                <div class="activity-card" style="border-left-color:var(--hmc-sky);">
+                    <h5>Quality of Life</h5>
+                    <ul>
+                        <li>Community Market Fair</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:66%; margin:0 auto 8px;">
+                <div class="activity-card" style="border-left-color:var(--hmc-yellow);">
+                    <h5>Social Engagement</h5>
+                    <ul>
+                        <li>Charitable Donation</li>
+                        <li>Children with Hope</li>
+                        <li>Run for Kids</li>
+                    </ul>
+                </div>
+                <div class="activity-card" style="border-left-color:var(--hmc-orange);">
+                    <h5>Youth &amp; Education</h5>
+                    <ul>
+                        <li>Scholarship Program</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="eco-bar">Track participation, earn points, redeem rewards &mdash; or convert 50 pts &rarr; 10 kgCO&#8322;eq Carbon Credit!</div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">12</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 13: PRECIOUS MOMENTS — HEALTH & ENVIRONMENT
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-13">
+        <div class="slide-header">
+            <h3>Precious Moments &mdash; Health &amp; Environment</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="padding:12px 24px;">
+            <div class="gallery-grid g5x2">
+                <img src="https://img2.pic.in.th/IMG_1036537eeb4b33f2b17c.jpg" alt="Beach cleanup" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/4J6A2654.jpg" alt="Environment" loading="lazy">
+                <img src="https://img2.pic.in.th/4J6A2639.jpg" alt="Environment" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_--._250606_33.jpg" alt="Tree planting" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/20250520_101128.jpg" alt="Health" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/20250520_090448.jpg" alt="Health" loading="lazy">
+                <img src="https://img2.pic.in.th/20250520_085624.jpg" alt="Health" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_-._250425_26.jpg" alt="Beach cleanup" loading="lazy">
+                <img src="https://img2.pic.in.th/4J6A2384.jpg" alt="Environment" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/4J6A3170.jpg" alt="Blood donation" loading="lazy">
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">13</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 14: PRECIOUS MOMENTS — RELIGION TRADITIONAL & CULTURE
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-14">
+        <div class="slide-header">
+            <h3>Precious Moments &mdash; Religion, Traditional &amp; Culture</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="padding:12px 24px;">
+            <div class="gallery-grid g5x2">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM__260219_6ebd6e4fe28c18443.jpg" alt="Bun Khao Lam" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM__260219_5631a7ca9b158b81c.jpg" alt="Bun Khao Lam" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM__260219_3f539f9870f093031.jpg" alt="Bun Khao Lam" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM__260219_2.jpg" alt="Bun Khao Lam" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_-_260219_1.jpg" alt="Temple" loading="lazy">
+                <img src="https://img2.pic.in.th/H-173.jpg" alt="Cultural" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/H-154.jpg" alt="Cultural" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/H-367.jpg" alt="Cultural" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_-2568_250423_193.jpg" alt="Songkran" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/20250401_100157.jpg" alt="Cultural" loading="lazy">
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">14</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 15: PRECIOUS MOMENTS — QUALITY OF LIFE
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-15">
+        <div class="slide-header">
+            <h3>Precious Moments &mdash; Quality of Life</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="padding:12px 24px;">
+            <div class="gallery-grid g4x2">
+                <img src="https://img5.pic.in.th/file/secure-sv1/626758265_26086261764330593_1863826505801202958_n.jpg" alt="Market" loading="lazy">
+                <img src="https://img2.pic.in.th/624895328_26086261577663945_2761624111483303088_n.jpg" alt="Market" loading="lazy">
+                <img src="https://img2.pic.in.th/627082477_26086261550997281_6626468116915313197_n.jpg" alt="Market" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/624920541_26086262050997231_2257900588925382356_n.jpg" alt="Market" loading="lazy">
+                <img src="https://img2.pic.in.th/625193669_26086262020997234_7120227455286119332_n.jpg" alt="Market" loading="lazy">
+                <img src="https://img2.pic.in.th/20250425_104826.jpg" alt="Quality of life" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/20250425_101831.jpg" alt="Quality of life" loading="lazy">
+                <img src="https://img2.pic.in.th/20250425_095727.jpg" alt="Quality of life" loading="lazy">
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">15</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 16: PRECIOUS MOMENTS — SOCIAL ENGAGEMENT
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-16">
+        <div class="slide-header">
+            <h3>Precious Moments &mdash; Social Engagement</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="padding:12px 24px;">
+            <div class="gallery-grid g5x2">
+                <img src="https://img2.pic.in.th/4J6A7987.jpg" alt="Social" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/4J6A7983.jpg" alt="Social" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/4J6A7894.jpg" alt="Social" loading="lazy">
+                <img src="https://img2.pic.in.th/4J6A2841.jpg" alt="Social" loading="lazy">
+                <img src="https://img2.pic.in.th/IMG_6359.jpg" alt="Social" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/IMG_6416d8d1ff2ae465ac01.jpg" alt="Social" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_-.10_250729_18.jpg" alt="Community" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_-.10_250729_9.jpg" alt="Community" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_--7-_250729_27.jpg" alt="Puen Yim" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_--7-_250729_7.jpg" alt="Puen Yim" loading="lazy">
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">16</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 17: PRECIOUS MOMENTS — YOUTH & EDUCATION
+         ============================================================ -->
+    <div class="slide slide--content" id="slide-17">
+        <div class="slide-header">
+            <h3>Precious Moments &mdash; Youth &amp; Education</h3>
+            <img class="header-logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC">
+        </div>
+        <div class="slide-body" style="padding:8px 24px;">
+            <div class="gallery-grid g5x3">
+                <img src="https://img2.pic.in.th/4J6A3704.jpg" alt="Youth" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_-RYTC_260219_12.jpg" alt="RYTC" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_-RYTC_260219_11.jpg" alt="RYTC" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_-RYTC_260219_8.jpg" alt="RYTC" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/DSC062352b7b52b5a6ad1a3c.jpg" alt="Education" loading="lazy">
+                <img src="https://img2.pic.in.th/DSC06219.jpg" alt="Education" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_-RYTC_260219_1.jpg" alt="RYTC" loading="lazy">
+                <img src="https://img2.pic.in.th/DSC06223.jpg" alt="Education" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_-RYTC_260219_7.jpg" alt="RYTC" loading="lazy">
+                <img src="https://img2.pic.in.th/LINE_ALBUM_-.._260206_1.jpg" alt="Youth" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/4J6A9701.jpg" alt="Youth" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/H-187.jpg" alt="Education" loading="lazy">
+                <img src="https://img2.pic.in.th/1756693540462.jpg" alt="Education" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/1756693482485.jpg" alt="Education" loading="lazy">
+                <img src="https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_-2569_260301_1.jpg" alt="Children's Day" loading="lazy">
+            </div>
+        </div>
+        <div class="slide-footer">
+            <div class="footer-left">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a>
+                <span class="footer-divider">|</span>
+            </div>
+            <span class="page-number">17</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SLIDE 18: THANK YOU
+         ============================================================ -->
+    <div class="slide slide--end" id="slide-18">
+        <div class="end-decoration"></div>
+        <div class="end-content">
+            <img class="logo" src="https://img5.pic.in.th/file/secure-sv1/HMC-Polymers-Logo---White-Color.png" alt="HMC Polymers Logo">
+            <h2>Thank You</h2>
+            <div class="contact-info">
+                <a href="https://www.hmcpolymers.com">www.hmcpolymers.com</a><br>
+                HMC Polymers Co., Ltd.<br>
+                Corp Com and CSR Department
+            </div>
+        </div>
+        <img class="mascot" src="https://img2.pic.in.th/36ac591f1ce97caf8.png" alt="Mascot" style="bottom:20px; right:50px; height:240px;">
+    </div>
+
+    <!-- ============================================================
+         NAVIGATION
+         ============================================================ -->
+    <div class="nav-controls">
+        <button onclick="prevSlide()" title="Previous">&#9664;</button>
+        <button onclick="nextSlide()" title="Next">&#9654;</button>
+        <button onclick="togglePresentation()" title="Fullscreen">&#9974;</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        let presentationMode = false;
+
+        function showSlide(index) {
+            if (presentationMode) {
+                slides.forEach((s, i) => s.classList.toggle('active', i === index));
+            } else {
+                slides[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            currentSlide = index;
+        }
+        function nextSlide() { if (currentSlide < slides.length - 1) showSlide(currentSlide + 1); }
+        function prevSlide() { if (currentSlide > 0) showSlide(currentSlide - 1); }
+        function togglePresentation() {
+            presentationMode = !presentationMode;
+            document.body.classList.toggle('presentation-mode', presentationMode);
+            if (presentationMode) {
+                const scaleX = window.innerWidth / 960;
+                const scaleY = window.innerHeight / 540;
+                document.documentElement.style.setProperty('--presentation-scale', Math.min(scaleX, scaleY));
+                showSlide(currentSlide);
+            }
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
+            else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
+            else if (e.key === 'Escape') {
+                if (presentationMode) { togglePresentation(); }
+            }
+            else if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.metaKey) { togglePresentation(); }
+        });
+        const observer = new IntersectionObserver((entries) => {
+            if (presentationMode) return;
+            entries.forEach(entry => { if (entry.isIntersecting) currentSlide = [...slides].indexOf(entry.target); });
+        }, { threshold: 0.5 });
+        slides.forEach(slide => observer.observe(slide));
+
+    </script>
+</body>
+</html>
