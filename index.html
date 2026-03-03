@@ -50,7 +50,7 @@
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { font-size: 16px; scroll-behavior: smooth; }
+        html { font-size: 16px; scroll-behavior: smooth; touch-action: pan-x pan-y pinch-zoom; }
 
         body {
             font-family: var(--font-body);
@@ -600,9 +600,6 @@
         /* --- Mobile / Small-screen scaling --- */
         @media (max-width: 1000px) {
             body { padding: 0.5rem 0; gap: 0.5rem; }
-            .slide {
-                transform-origin: top center;
-            }
         }
 
     </style>
@@ -1361,20 +1358,20 @@
             if (Math.abs(diff) > 50) { diff < 0 ? nextSlide() : prevSlide(); }
         }, { passive: true });
 
-        /* --- Mobile scaling: shrink slides to fit viewport --- */
+        /* --- Mobile scaling: use CSS zoom (works with pinch-to-zoom) --- */
         function updateMobileScale() {
             const vw = window.innerWidth;
             if (vw < 1000 && !presentationMode) {
                 const scale = Math.min(1, (vw - 16) / 960);
-                const scaledHeight = 540 * scale;
-                const marginFix = scaledHeight - 540;
                 slides.forEach(s => {
-                    s.style.transform = 'scale(' + scale + ')';
-                    s.style.transformOrigin = 'top center';
-                    s.style.marginBottom = marginFix + 'px';
+                    s.style.zoom = scale;
+                    s.style.transform = '';
+                    s.style.transformOrigin = '';
+                    s.style.marginBottom = '';
                 });
             } else if (!presentationMode) {
                 slides.forEach(s => {
+                    s.style.zoom = '';
                     s.style.transform = '';
                     s.style.transformOrigin = '';
                     s.style.marginBottom = '';
