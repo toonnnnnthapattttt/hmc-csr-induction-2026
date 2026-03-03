@@ -574,9 +574,12 @@
         body.presentation-mode .nav-controls { bottom: 10px; right: 10px; opacity: 0; transition: opacity 0.3s; }
         body.presentation-mode:hover .nav-controls { opacity: 1; }
 
+        /* --- Mobile / Small-screen scaling --- */
         @media (max-width: 1000px) {
-            :root { --slide-width: 100vw; --slide-height: calc(100vw * 9 / 16); }
-            body { padding: 1rem 0; }
+            body { padding: 0.5rem 0; gap: 0.5rem; }
+            .slide {
+                transform-origin: top center;
+            }
         }
 
     </style>
@@ -1269,6 +1272,29 @@
             entries.forEach(entry => { if (entry.isIntersecting) currentSlide = [...slides].indexOf(entry.target); });
         }, { threshold: 0.5 });
         slides.forEach(slide => observer.observe(slide));
+
+        /* --- Mobile scaling: shrink slides to fit viewport --- */
+        function updateMobileScale() {
+            const vw = window.innerWidth;
+            if (vw < 1000 && !presentationMode) {
+                const scale = Math.min(1, (vw - 16) / 960);
+                const scaledHeight = 540 * scale;
+                const marginFix = scaledHeight - 540;
+                slides.forEach(s => {
+                    s.style.transform = 'scale(' + scale + ')';
+                    s.style.transformOrigin = 'top center';
+                    s.style.marginBottom = marginFix + 'px';
+                });
+            } else if (!presentationMode) {
+                slides.forEach(s => {
+                    s.style.transform = '';
+                    s.style.transformOrigin = '';
+                    s.style.marginBottom = '';
+                });
+            }
+        }
+        window.addEventListener('resize', updateMobileScale);
+        updateMobileScale();
 
     </script>
 </body>
