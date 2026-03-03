@@ -571,8 +571,12 @@
             display: none; box-shadow: none; border-radius: 0;
         }
         body.presentation-mode .slide.active { display: block; }
-        body.presentation-mode .nav-controls { bottom: 10px; right: 10px; opacity: 0; transition: opacity 0.3s; }
+        body.presentation-mode .nav-controls { bottom: 10px; right: 10px; opacity: 0; transition: opacity 0.3s; z-index: 9999; }
         body.presentation-mode:hover .nav-controls { opacity: 1; }
+        /* Mobile: always show nav in presentation mode (no hover on touch) */
+        @media (max-width: 1000px) {
+            body.presentation-mode .nav-controls { opacity: 1; }
+        }
 
         /* --- Mobile / Small-screen scaling --- */
         @media (max-width: 1000px) {
@@ -1253,10 +1257,19 @@
             presentationMode = !presentationMode;
             document.body.classList.toggle('presentation-mode', presentationMode);
             if (presentationMode) {
+                /* Clear mobile inline styles so CSS presentation transform works */
+                slides.forEach(s => {
+                    s.style.transform = '';
+                    s.style.transformOrigin = '';
+                    s.style.marginBottom = '';
+                });
                 const scaleX = window.innerWidth / 960;
                 const scaleY = window.innerHeight / 540;
                 document.documentElement.style.setProperty('--presentation-scale', Math.min(scaleX, scaleY));
                 showSlide(currentSlide);
+            } else {
+                /* Exiting: re-apply mobile scaling if needed */
+                updateMobileScale();
             }
         }
         document.addEventListener('keydown', (e) => {
@@ -1272,6 +1285,15 @@
             entries.forEach(entry => { if (entry.isIntersecting) currentSlide = [...slides].indexOf(entry.target); });
         }, { threshold: 0.5 });
         slides.forEach(slide => observer.observe(slide));
+
+        /* --- Touch swipe for presentation mode --- */
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            if (!presentationMode) return;
+            const diff = e.changedTouches[0].screenX - touchStartX;
+            if (Math.abs(diff) > 50) { diff < 0 ? nextSlide() : prevSlide(); }
+        }, { passive: true });
 
         /* --- Mobile scaling: shrink slides to fit viewport --- */
         function updateMobileScale() {
