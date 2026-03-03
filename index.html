@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>HMC CSR Induction Day 2026</title>
     <style>
         /* ============================================================
@@ -564,17 +567,33 @@
         /* ============================================================
            PRESENTATION MODE
            ============================================================ */
-        body.presentation-mode { background: black; padding: 0; gap: 0; overflow: hidden; }
+        body.presentation-mode {
+            background: black; padding: 0; gap: 0; overflow: hidden;
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100dvh; height: 100vh;
+            /* dvh first, vh fallback for older browsers */
+        }
+        @supports (height: 100dvh) {
+            body.presentation-mode { height: 100dvh; }
+        }
         body.presentation-mode .slide {
-            position: fixed; top: 50%; left: 50%;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(var(--presentation-scale, 1));
             display: none; box-shadow: none; border-radius: 0;
         }
         body.presentation-mode .slide.active { display: block; }
-        body.presentation-mode .nav-controls { bottom: 10px; right: 10px; opacity: 0; transition: opacity 0.3s; z-index: 9999; }
+        body.presentation-mode .nav-controls {
+            position: fixed; bottom: 10px; right: 10px;
+            opacity: 0; transition: opacity 0.3s; z-index: 9999;
+            bottom: max(10px, env(safe-area-inset-bottom));
+            right: max(10px, env(safe-area-inset-right));
+        }
         body.presentation-mode:hover .nav-controls { opacity: 1; }
-        /* Mobile: always show nav in presentation mode (no hover on touch) */
+        /* Mobile: always show nav in presentation mode */
         @media (max-width: 1000px) {
+            body.presentation-mode .nav-controls { opacity: 1; }
+        }
+        @media (pointer: coarse) {
             body.presentation-mode .nav-controls { opacity: 1; }
         }
 
@@ -1255,8 +1274,8 @@
         function prevSlide() { if (currentSlide > 0) showSlide(currentSlide - 1); }
         function updatePresentationScale() {
             if (!presentationMode) return;
-            const vw = window.innerWidth || document.documentElement.clientWidth;
-            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
             const scaleX = vw / 960;
             const scaleY = vh / 540;
             document.documentElement.style.setProperty('--presentation-scale', Math.min(scaleX, scaleY));
@@ -1272,12 +1291,17 @@
                     s.style.transformOrigin = '';
                     s.style.marginBottom = '';
                 });
-                /* Try native fullscreen to hide URL bar */
+                /* Try native fullscreen (works on Android & iPad) */
                 const el = document.documentElement;
                 if (el.requestFullscreen) { el.requestFullscreen().catch(() => {}); }
                 else if (el.webkitRequestFullscreen) { el.webkitRequestFullscreen(); }
+                /* iOS Safari: scroll trick to minimize URL bar */
+                window.scrollTo(0, 1);
                 updatePresentationScale();
                 showSlide(currentSlide);
+                /* Recalculate after URL bar animation settles */
+                setTimeout(updatePresentationScale, 300);
+                setTimeout(updatePresentationScale, 600);
             } else {
                 /* Exit native fullscreen */
                 if (document.fullscreenElement) { document.exitFullscreen().catch(() => {}); }
@@ -1288,20 +1312,23 @@
         }
 
         /* Recalculate on resize / orientation change / fullscreen change */
-        window.addEventListener('resize', () => { updatePresentationScale(); });
-        window.addEventListener('orientationchange', () => {
-            setTimeout(updatePresentationScale, 200);
+        window.addEventListener('resize', () => {
+            updatePresentationScale();
+            if (!presentationMode) updateMobileScale();
         });
-        document.addEventListener('fullscreenchange', updatePresentationScale);
-        document.addEventListener('webkitfullscreenchange', updatePresentationScale);
-        /* Exit presentation if user exits fullscreen via browser gesture */
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updatePresentationScale, 300);
+            setTimeout(updatePresentationScale, 600);
+        });
         document.addEventListener('fullscreenchange', () => {
+            updatePresentationScale();
             if (!document.fullscreenElement && presentationMode) {
                 presentationMode = false;
                 document.body.classList.remove('presentation-mode');
                 updateMobileScale();
             }
         });
+        document.addEventListener('webkitfullscreenchange', updatePresentationScale);
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
             else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
